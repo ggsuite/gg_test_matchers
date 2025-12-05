@@ -1,8 +1,7 @@
 name: gg_test_matchers
 description: gg_test_matchers provides various additional dart test matchers
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/ggsuite/gg_test_matchers.git
-publish_to: none
 
 environment:
   sdk: ">=3.9.0 <4.0.0"

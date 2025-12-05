@@ -9,3 +9,4 @@
 ### Changed
 
 - Initial implementation
+- Increase version
