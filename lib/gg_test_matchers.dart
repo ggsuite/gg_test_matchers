@@ -5,5 +5,3 @@
 // found in the LICENSE file in the root of this package.
 
 library;
-
-export 'src/gg_test_matchers.dart';
