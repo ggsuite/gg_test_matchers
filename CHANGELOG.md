@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2025-12-05
+
+### Changed
+
+- Improve error output
+
 ## [1.0.2] - 2025-12-05
 
 ### Changed
@@ -21,5 +27,6 @@
 
 - Fix pub.dev issues
 
+[1.0.3]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/ggsuite/gg_test_matchers/tag/%tag

@@ -200,5 +200,57 @@ void main() {
       matcher.describe(description);
       expect(description.toString(), 'deeply contains {a: 1, b: [2, 3]}');
     });
+
+    group('describeMismatch', () {
+      test('unnested json', () {
+        late final List<String> message;
+
+        try {
+          expect({'a': 10, 'b': 11}, deepJsonContains({'a': 10, 'b': 12}));
+        } catch (e) {
+          message = ((e as dynamic).message!.split('\n') as List<String>);
+        }
+
+        expect(message, [
+          'Expected: deeply contains {a: 10, b: 12}',
+          '  Actual: {\'a\': 10, \'b\': 11}',
+          '   Which: missing or mismatched fields:',
+          '          - b: value mismatch: expected "12", got "11"',
+          '          ',
+          '',
+        ]);
+      });
+
+      test('nested json', () {
+        late final List<String> message;
+
+        try {
+          expect(
+            {
+              'a': 10,
+              'b': 11,
+              'x': {'y': 20, 'z': 30},
+            },
+            deepJsonContains({
+              'a': 10,
+              'b': 10,
+              'x': {'y': 21},
+            }),
+          );
+        } catch (e) {
+          message = ((e as dynamic).message!.split('\n') as List<String>);
+        }
+
+        expect(message, [
+          'Expected: deeply contains {a: 10, b: 10, x: {y: 21}}',
+          '  Actual: {\'a\': 10, \'b\': 11, \'x\': {\'y\': 20, \'z\': 30}}',
+          '   Which: missing or mismatched fields:',
+          '          - b: value mismatch: expected "10", got "11"',
+          '          - x/y: value mismatch: expected "21", got "20"',
+          '          ',
+          '',
+        ]);
+      });
+    });
   });
 }
