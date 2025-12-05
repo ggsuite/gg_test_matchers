@@ -5,3 +5,5 @@
 // found in the LICENSE file in the root of this package.
 
 library;
+
+export 'src/deep_json_contains.dart';
