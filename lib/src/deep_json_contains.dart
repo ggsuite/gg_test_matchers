@@ -4,6 +4,8 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
+import 'dart:math';
+
 import 'package:test/test.dart';
 
 /// Deeply checks that json contains all elements of expected json.
@@ -66,12 +68,32 @@ class _DeepJsonContains extends Matcher {
         // We still attempt to compare existing elements for detailed diffs.
       }
       var allOk = true;
-      final len = expected.length <= actual.length
-          ? expected.length
-          : actual.length;
+      final expectedLength = expected.length;
+      final actualLength = actual.length;
+
+      final len = min(expectedLength, actualLength);
+      var nextJ = 0;
       for (var i = 0; i < len; i++) {
         final nextPath = [...path, '[$i]'];
-        final ok = _matches(actual[i], expected[i], nextPath, errors);
+        final exp = expected[i];
+
+        var ok = false;
+        for (var j = nextJ; j < actualLength; j++) {
+          final act = actual[j];
+          if (_matches(act, exp, nextPath, [])) {
+            ok = true;
+            nextJ = j + 1;
+            break;
+          }
+
+          if (j == actualLength - 1) {
+            errors.add(
+              '${pfx()}no matching element for list item at index $i: $exp',
+            );
+            allOk = false;
+          }
+        }
+
         if (!ok) allOk = false;
       }
       return allOk && expected.length <= actual.length;

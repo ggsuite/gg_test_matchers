@@ -81,10 +81,26 @@ void main() {
       expect([1, 2], isNot(deepJsonContains([1, 2, 3])));
     });
 
-    test('fails when list prefix values mismatch', () {
+    test('matches not when list prefix values mismatch', () {
       final actual = [1, 2, 3, 4];
-      expect(actual, isNot(deepJsonContains([2])));
-      expect(actual, isNot(deepJsonContains([1, 3])));
+      expect(actual, deepJsonContains([2]));
+      expect(actual, deepJsonContains([1, 3]));
+    });
+
+    test('fails when actual has extra elements', () {
+      expect([1, 2, 3, 4], isNot(deepJsonContains([1, 2, 3, 4, 5])));
+    });
+
+    test('matches when actual has extra elements', () {
+      expect([1, 2, 3, 4], deepJsonContains([2, 4]));
+    });
+
+    test('fails when actual has same elements in different order', () {
+      expect([1, 2, 3, 4], isNot(deepJsonContains([4, 3, 2, 1])));
+    });
+
+    test('fails when an element is repeated in expected but not in actual', () {
+      expect([1, 2, 3, 4], isNot(deepJsonContains([1, 1])));
     });
 
     test('handles nested lists and maps', () {
@@ -123,7 +139,7 @@ void main() {
             'items': [
               {
                 'id': 1,
-                'meta': [false],
+                'meta': [false, false],
               },
             ],
           }),
@@ -184,7 +200,7 @@ void main() {
         isNot(
           deepJsonContains({
             'user': {
-              'roles': ['editor'], // prefix must start at index 0
+              'roles': ['editor', 'admin'], // wrong order
             },
           }),
         ),
