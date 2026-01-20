@@ -5,6 +5,7 @@
 ### Changed
 
 - Arrays must not exactly match. Right order is enough.
+- Expected object must not be an empty map
 
 ## [1.0.3] - 2025-12-05
 

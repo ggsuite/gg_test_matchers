@@ -154,11 +154,14 @@ void main() {
       expect(actual, deepJsonContains({'a': 1, 'b': 2}));
     });
 
-    test('empty expected structures always match compatible actual types', () {
-      expect(<String, dynamic>{}, deepJsonContains(<dynamic, dynamic>{}));
-      expect({'a': 1}, deepJsonContains(<dynamic, dynamic>{}));
-      expect(<dynamic>[], deepJsonContains(<dynamic>[]));
-      expect([1, 2, 3], deepJsonContains(<dynamic>[]));
+    test('empty expected structures always fail', () {
+      expect(
+        <String, dynamic>{},
+        isNot(deepJsonContains(<dynamic, dynamic>{})),
+      );
+      expect({'a': 1}, isNot(deepJsonContains(<dynamic, dynamic>{})));
+      expect(<dynamic>[], isNot(deepJsonContains(<dynamic>[])));
+      expect([1, 2, 3], isNot(deepJsonContains(<dynamic>[])));
     });
 
     test('type mismatch scenarios', () {
