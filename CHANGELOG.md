@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.1] - 2026-03-04
 
 ### Fixed
 
@@ -40,7 +40,7 @@
 
 - Fix pub.dev issues
 
-[Unreleased]: https://github.com/ggsuite/gg_test_matchers/compare/1.1.0...HEAD
+[1.1.1]: https://github.com/ggsuite/gg_test_matchers/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.1...1.0.2
