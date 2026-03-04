@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- Fix wrong match of empty arrays
+
 ## [1.1.0] - 2026-01-20
 
 ### Changed
@@ -34,6 +40,7 @@
 
 - Fix pub.dev issues
 
+[Unreleased]: https://github.com/ggsuite/gg_test_matchers/compare/1.1.0...HEAD
 [1.1.0]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/ggsuite/gg_test_matchers/compare/1.0.1...1.0.2

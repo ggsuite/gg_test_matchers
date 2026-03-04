@@ -34,9 +34,18 @@ class _DeepJsonContains extends Matcher {
   ) {
     String pfx() => path.isEmpty ? '' : '${path.join('/')}: ';
 
-    if ((expected is Iterable || expected is Map) && expected.isEmpty as bool) {
-      errors.add('${pfx()}expected non-empty Map, got empty Map');
-      return false;
+    final expectedIsEmpty =
+        (expected is Iterable || expected is Map) && expected.isEmpty as bool;
+    final actualIsEmpty =
+        (actual is Iterable || actual is Map) && actual.isEmpty as bool;
+
+    if (expectedIsEmpty) {
+      if (!actualIsEmpty) {
+        errors.add(
+          '${pfx()}expected non-empty Map or List, got empty Map or List',
+        );
+        return false;
+      }
     }
 
     // Map: expected ⊆ actual

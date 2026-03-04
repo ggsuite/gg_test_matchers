@@ -154,13 +154,16 @@ void main() {
       expect(actual, deepJsonContains({'a': 1, 'b': 2}));
     });
 
-    test('empty expected structures always fail', () {
-      expect(
-        <String, dynamic>{},
-        isNot(deepJsonContains(<dynamic, dynamic>{})),
-      );
+    test('empty expected structures do not fail when actual is empty', () {
+      expect(<String, dynamic>{}, deepJsonContains(<dynamic, dynamic>{}));
+      expect(<dynamic>[], deepJsonContains(<dynamic>[]));
+    });
+
+    test('empty expected structures fail when actual is not empty', () {
+      expect(<String, dynamic>{
+        'hello': 'world',
+      }, isNot(deepJsonContains(<dynamic, dynamic>{})));
       expect({'a': 1}, isNot(deepJsonContains(<dynamic, dynamic>{})));
-      expect(<dynamic>[], isNot(deepJsonContains(<dynamic>[])));
       expect([1, 2, 3], isNot(deepJsonContains(<dynamic>[])));
     });
 
@@ -268,6 +271,44 @@ void main() {
           '          - x/y: value mismatch: expected "21", got "20"',
           '          ',
           '',
+        ]);
+      });
+    });
+
+    group('specialCases', () {
+      test('fix empty array error', () {
+        expect(
+          {
+            'parent': {'array': <dynamic>[]},
+          },
+          deepJsonContains({
+            'parent': {'array': <dynamic>[]},
+          }),
+        );
+      });
+
+      test('complain on empty and non empty arrays', () {
+        var message = <String>[];
+        try {
+          expect(
+            {
+              'parent': {
+                'array': <dynamic>['nonEmpty'],
+              },
+            },
+            deepJsonContains({
+              'parent': {'array': <dynamic>[]},
+            }),
+          );
+        } catch (e) {
+          message = (e as dynamic).message.toString().trim().split('\n');
+        }
+
+        expect(message, [
+          'Expected: deeply contains {parent: {array: []}}',
+          '  Actual: {\'parent\': {\'array\': [\'nonEmpty\']}}',
+          '   Which: missing or mismatched fields:',
+          '          - parent/array: expected non-empty Map or List, got empty Map or List',
         ]);
       });
     });
